@@ -27,12 +27,12 @@ func (z *zipper) Archive(src, dest string) error {
 	w := zip.NewWriter(out)
 	defer w.Close()
 	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
 		if info.IsDir() {
 			return nil // skip
-		}
-		if err != nil {
-			return err
 		}
 
 		in, err := os.Open(path)
